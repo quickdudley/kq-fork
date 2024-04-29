@@ -22,11 +22,11 @@ else()
 endif()
 
 if(SDL2_mixer_FOUND)
-  set(SDL2_LIBRARIES SDL2::SDL2 SDL2::SDL2main SDL2_mixer::SDL2_mixer)
+  set(SDL2_LIBRARIES SDL2::SDL2 SDL2_mixer::SDL2_mixer)
 else()
   find_package(PkgConfig REQUIRED)
   pkg_check_modules(SDL2_MIXER REQUIRED SDL2_mixer)
-  set(SDL2_LIBRARIES SDL2::SDL2 SDL2::SDL2main ${SDL2_MIXER_LINK_LIBRARIES})
+  set(SDL2_LIBRARIES SDL2::SDL2 ${SDL2_MIXER_LINK_LIBRARIES})
 endif()
 
 include_directories(${CMAKE_BINARY_DIR}) # for makeconfig.h
@@ -96,3 +96,8 @@ target_link_libraries(kq-fork
 	${SDL2_LIBRARIES}
 	${TINYXML2_LINK_LIBRARIES}
 	${PNG_LIBRARIES})
+
+## SET_INSTALL_PREFIX
+
+install(TARGETS kq-fork DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+install(DIRECTORY data maps music other scripts DESTINATION ${CMAKE_INSTALL_PREFIX}/share/kq-fork)
